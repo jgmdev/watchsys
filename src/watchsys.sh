@@ -98,9 +98,9 @@ stop_daemon()
 	
 	kill $(daemon_pid)
 	
-	if [ -e /var/run/watchsys.pid ]; then
-		rm -f /var/run/watchsys.pid
-	fi
+	while [ -e /var/run/watchsys.pid ]; do
+		continue
+	done
 	
 	log_msg "daemon stopped"
 }
