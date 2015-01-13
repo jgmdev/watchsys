@@ -1,0 +1,3 @@
+# this cronjob acts like a watchdog for watchsys, which restarts
+# watchsys in the event that it isn't running.
+*/3 * * * * root /usr/bin/watchsys --start >/dev/null 2>&1

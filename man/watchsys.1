@@ -1,0 +1,140 @@
+.TH watchsys 1
+
+.SH NAME
+watchsys \- script for basic system monitoring and prevention.
+
+.SH SYNOPSIS
+.B watchsys
+[OPTION]
+
+.SH DESCRIPTION
+.PP
+WatchSys is a set of bash shell scripts that run from a central daemon 
+for basic monitoring of a linux server processes, cpu usage, 
+network connections, ram usage, disk usage, file changes, etc...
+
+.SH OPTIONS
+
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+display the script options
+.TP
+\fB\-d\fR, \fB\-\-start\fR
+initialize a daemon to monitor the system
+.TP
+\fB\-s\fR, \fB\-\-stop\fR
+stop the daemon
+.TP
+\fB\-t\fR, \fB\-\-status\fR
+display the daemon status and pid if running
+
+.SH SERVICES
+
+.PP
+On 
+.B /etc/watchsys/proc.list
+You can add a list of services to monitor. If one is down it 
+will be restarted by executing the default system command,
+which is auto-detected and can be: 
+
+.TP
+1. systemctl start <service_name>
+.TP
+2. service <service_name>
+.TP
+3. /etc/init.d/<service_name>
+
+.PP
+Also, if you are monitoring a custom process you can specify a custom
+command to restart it.
+
+Example content of this file:
+ 
+# [Process Name] : [Service Name] : [Start Command]
+.TP
+apache : apache2 : default
+.TP
+hiawatha : hiawatha : -c /etc/hiawatha/hiawatha-custom.conf
+.TP
+named : bind9 : default
+
+.SH SERVERS
+
+.PP
+On 
+.B /etc/watchsys/server.list 
+you can put a list of hostnames or ip's which 
+are ping to see if they are alive.
+
+Example of this file:
+
+# [Server] : [Port]
+.TP
+my-domain.com : none
+.TP
+my-domain.com : 80
+.TP
+mail.my-domain.com : 143
+
+.PP
+As you see 
+.B none 
+is used when we want to monitor a server online
+status, but not a service on a specific port.
+
+.SH SETTINGS
+You can modify the script settings by editing /etc/watchsys/watchsys.conf
+
+.TP
+.B EMAIL_TO = '<email>'
+An email is sent to the following address when an important
+system event is triggered, like critical cpu or ram usage,
+service crashes, network status, file changes, etc...
+(Default: root)
+
+.TP
+.B CUSTOM_EMAIL_COMMAND = '<command>'
+If a custom e-mail command is given, it will be used to send all
+e-mail notifications. This command will receive 3 parameters:
+$email, $subject and $email_message_file. $email_message_file is
+a path to a file that contains the message text. For example:
+If you set the command to /usr/bin/mycommand it will be called
+as follows: 
+
+/usr/bin/mycommand $email $subject $email_message_file
+
+Leave empty for default. (Default: "mail")
+
+.TP
+.B ALLOW_THREADING = <0|1>
+Setting this value to 1 will launch a separate instance everytime
+monitoring of a resource is needed which is faster than monitoring
+in sequence. Set to 0 to disable. (Default: 1)
+
+.PP
+For other configuration options make sure to check
+.B /etc/watchsys/watchsys.conf
+which is documented with other options to control
+monitor and e-mail intervals as values used when considering
+a warning or critical status for a resource.
+
+.SH FILES
+.B /usr/share/doc/watchsys/LICENSE
+.br
+.B /usr/lib/watchsys/
+.br
+.B /usr/bin/watchsys
+.br
+.B /etc/watchsys/watchsys.conf
+.br
+.B /etc/watchsys/proc.list
+.br
+.B /etc/watchsys/server.list
+.br
+.B /etc/watchsys/dir.list
+
+.SH AUTHOR
+Jefferson González <jgmdev@gmail.com>
+
+.SH LICENSE
+GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>

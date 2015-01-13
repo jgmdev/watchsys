@@ -1,0 +1,9 @@
+# On this file you can put a list of hostnames or ip's which 
+# are ping to see if they are alive.
+#
+# Example:
+#
+# [Server] : [Port]
+# my-domain.com : none
+# my-domain.com : 80
+# mail.my-domain.com : 143

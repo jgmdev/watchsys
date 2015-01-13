@@ -1,0 +1,11 @@
+[Unit]
+Description=WatchSys
+After=network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/watchsys --start
+ExecStop=/usr/bin/watchsys --stop
+
+[Install]
+WantedBy=multi-user.target

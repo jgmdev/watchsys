@@ -1,0 +1,17 @@
+# Here you can add a list of services to monitor. If one is down it 
+# can be restarted by executing the default system command,
+# which is auto-detected and can be: 
+#
+# 1. systemctl start <service_name>
+# 2. service <service_name>
+# 3. /etc/init.d/<service_name>
+#
+# Also, if you are monitoring a custom process you can specify a custom
+# command to restart it.
+#
+# Examples:
+# 
+# [Process Name] : [Service Name] : [Start Command]
+# apache : apache2 : default
+# hiawatha : hiawatha : -c /etc/hiawatha/hiawatha-custom.conf
+# named : bind9 : default

@@ -1,0 +1,6 @@
+# List of directories scanned for changes, usually the files on these
+# directories should not change such as:
+#
+# /usr/bin
+# /usr/sbin
+# /sbin
