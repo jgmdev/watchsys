@@ -105,8 +105,8 @@ if [ -d /etc/init.d ]; then
 	UPDATERC_PATH=`whereis update-rc.d`
 	if [ "$UPDATERC_PATH" != "update-rc.d:" ] && [ "$DESTDIR" = "" ]; then
 		echo -n "Activating watchsys service..."
-		#update-rc.d watchsys defaults > /dev/null 2>&1
-		#service watchsys start > /dev/null 2>&1
+		update-rc.d watchsys defaults > /dev/null 2>&1
+		service watchsys start > /dev/null 2>&1
 		echo " (done)"
 	else
 		echo "watchsys service needs to be manually started... (warning)"
@@ -122,8 +122,8 @@ elif [ -d /usr/lib/systemd/system ]; then
 	SYSTEMCTL_PATH=`whereis systemctl`
 	if [ "$SYSTEMCTL_PATH" != "systemctl:" ] && [ "$DESTDIR" = "" ]; then
 		echo -n "Activating watchsys service..."
-		#systemctl enable watchsys > /dev/null 2>&1
-		#systemctl start watchsys > /dev/null 2>&1
+		systemctl enable watchsys > /dev/null 2>&1
+		systemctl start watchsys > /dev/null 2>&1
 		echo " (done)"
 	else
 		echo "watchsys service needs to be manually started... (warning)"
