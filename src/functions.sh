@@ -140,7 +140,7 @@ start_service()
 send_email()
 {
 	if [ "$CUSTOM_EMAIL_COMMAND" != "" ]; then
-		. $CUSTOM_EMAIL_COMMAND $EMAIL_TO $1 $2 &
+		$CUSTOM_EMAIL_COMMAND "$EMAIL_TO" "$1" "$2" &
 		return
 	fi
     
