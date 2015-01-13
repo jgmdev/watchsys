@@ -87,10 +87,11 @@ fi
 
 echo;
 
-if [ -d /etc/cron.d ] && [ "$DESTDIR" = "" ]; then
+if [ -d /etc/cron.d ]; then
 	echo -n 'Creating cron to run script every minute...'
 	mkdir -p "$DESTDIR/etc/cron.d/"
-	cp system/watchsys.cron "$DESTDIR/cron.d/watchsys" > /dev/null 2>&1
+	cp system/watchsys.cron "$DESTDIR/etc/cron.d/watchsys" > /dev/null 2>&1
+	chmod 0644 "$DESTDIR/etc/cron.d/watchsys"
 	echo " (done)"
 fi
 
