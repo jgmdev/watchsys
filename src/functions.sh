@@ -144,7 +144,7 @@ send_email()
 		return
 	fi
     
-	MESSAGE=`cat $2 | mail -s $1 $EMAIL_TO 2>&1`
+	MESSAGE=`cat "$2" | mail -s "$1" $EMAIL_TO 2>&1`
     
     if [ "$(echo $MESSAGE | grep 'not sent')" != "" ]; then
         log_msg "error: could not send alert e-mail"
