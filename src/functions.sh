@@ -353,7 +353,7 @@ monitor_servers()
 		port=`echo $line | cut -d":" -f2 | sed "s/ //"`
 		
 		if [ "$(echo $port | grep -i none)" = "" ]; then
-			echo "QUIT" | netcat -w 1 -z $ip $port > /dev/null 2>&1
+			echo "QUIT" | netcat -w 5 -z $ip $port > /dev/null 2>&1
             
 			if [ "$?" != "0" ]; then
 				log_msg "warning: server $ip:$port seems offline"
