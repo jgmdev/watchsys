@@ -62,7 +62,7 @@ On this file you can add a list of processes you wish to monitor
 in case of failure, this processes would be restarted by WatchSys
 and a notification e-mail sent to you. Example:
 
-> # [Process Name] : [Service Name] : [Start Command] <br />
+> \# [Process Name] : [Service Name] : [Start Command] <br />
 >   named          :   bind9        :  default <br />
 >   hiawatha       :   hiawatha     :  hiawatha -c /custom/config.conf
 
@@ -71,7 +71,7 @@ and a notification e-mail sent to you. Example:
 On this file you can add a list of host names or ip addresses to 
 monitor its online status, for example:
 
-> # server : port <br />
+> \# server : port <br />
 > myserver.com : none <br />
 > myserver.com : 80 <br />
 > mail.myserver.com : 143 <br />
