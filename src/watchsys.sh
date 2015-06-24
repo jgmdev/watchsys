@@ -135,12 +135,14 @@ daemon_loop()
 			. $SOURCE_PATH/watch_disk.sh &
 			. $SOURCE_PATH/watch_proc.sh &
 			. $SOURCE_PATH/watch_servers.sh &
+			. $SOURCE_PATH/watch_directories.sh &
 		else
 			monitor_cpu_usage
 			monitor_memory_usage
 			monitor_disk_usage
 			monitor_services
 			monitor_servers
+			monitor_directories
 		fi
 		
 		# Run monitors every 10 seconds

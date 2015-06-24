@@ -12,7 +12,7 @@ This software is licensed under the GPLv3 http://www.gnu.org/licenses/
 
 ### Features
 
-* Monitoring of file changes (to be implemented).
+* Monitoring of file changes.
 * Monitoring of servers online status.
 * Monitoring of cpu, memory and disk usage.
 * Monitoring of system processes/services status.

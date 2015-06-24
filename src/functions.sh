@@ -325,7 +325,74 @@ monitor_disk_usage()
 
 monitor_directories()
 {
-	echo "TODO" > /dev/null
+	# Five minutes
+	elapsed_time "directories_status" $DIRECTORIES_SCAN_INTERVAL
+	
+	if [ "$?" -eq 0 ]; then
+		return
+	fi
+	
+	DIRECTORIES_STATUS_FILE=/var/cache/watchsys/directories_status.txt
+	DIRECTORIES_STATUS_FILE_NEW=/var/cache/watchsys/directories_status_new.txt
+	DIRECTORIES_STATUS_EMAIL=/var/cache/watchsys/directories_email.txt
+	DIRECTORIES_STATUS_DIFF=/var/cache/watchsys/directories_diff.txt
+	
+	FIRST_TIME=0
+	FILES_CHANGED=0
+	
+	if [ ! -e "$DIRECTORIES_STATUS_FILE" ]; then
+		FIRST_TIME=1
+	fi
+	
+	while read line; do
+		line=`echo $line | sed "s/ //"`
+		if [ "$line" == "" ]; then
+			continue
+		fi
+		
+		while read file; do
+			if [ ! -d "$file" ]; then
+				echo `md5sum "$file"` >> "$DIRECTORIES_STATUS_FILE_NEW"
+			fi
+		done < <(find "$line" -name "*")
+	done < <(grep -v "#" $DIR_LIST)
+	
+	if [ $FIRST_TIME -eq 1 ]; then
+		cp "$DIRECTORIES_STATUS_FILE_NEW" "$DIRECTORIES_STATUS_FILE"
+	else
+		diff -u "$DIRECTORIES_STATUS_FILE" "$DIRECTORIES_STATUS_FILE_NEW" > "$DIRECTORIES_STATUS_DIFF"
+		
+		CHANGES_SIZE=`ls -l "$DIRECTORIES_STATUS_DIFF" | cut -d" " -f5`
+		
+		if [ "$CHANGES_SIZE" -ne 0 ]; then
+			FILES_CHANGED=1
+		fi
+	fi
+    
+	if [ $FILES_CHANGED -eq 1 ]; then
+		elapsed_time "directories_email_status" $DIRECTORIES_EMAIL_INTERVAL
+		
+		if [ "$?" -eq 0 ]; then
+			return
+		fi
+		
+		echo "Below is a diff showing the file changes" >> \
+			"$DIRECTORIES_STATUS_EMAIL"
+			
+		echo "========================================" >> \
+			"$DIRECTORIES_STATUS_EMAIL"
+			
+		cat "$DIRECTORIES_STATUS_DIFF" >> "$DIRECTORIES_STATUS_EMAIL"
+		
+		send_email "Warning: files have changed" \
+            $DIRECTORIES_STATUS_EMAIL
+            
+        cp "$DIRECTORIES_STATUS_FILE_NEW" "$DIRECTORIES_STATUS_FILE"
+	fi
+	
+	rm "$DIRECTORIES_STATUS_DIFF"
+	rm "$DIRECTORIES_STATUS_EMAIL"
+	rm "$DIRECTORIES_STATUS_FILE_NEW"
 }
 
 monitor_servers()
@@ -445,6 +512,7 @@ MEM_SCAN_INTERVAL=30
 DISK_SCAN_INTERVAL=$THIRTHY_MIN
 PROC_SCAN_INTERVAL=$((60 * 3))
 SERVERS_SCAN_INTERVAL=$((60 * 5))
+DIRECTORIES_SCAN_INTERVAL=$ONE_DAY
 CPU_EMAIL_WARN_INTERVAL=$ONE_DAY
 CPU_EMAIL_CRIT_INTERVAL=$ONE_HOUR
 MEM_EMAIL_WARN_INTERVAL=$ONE_DAY
@@ -453,6 +521,7 @@ DISK_EMAIL_WARN_INTERVAL=$ONE_DAY
 DISK_EMAIL_CRIT_INTERVAL=$SIX_HOURS
 PROC_EMAIL_INTERVAL=$((60 * 5))
 SERVERS_EMAIL_INTERVAL=$SIX_HOURS
+DIRECTORIES_EMAIL_INTERVAL=$SIX_HOURS
 WARNING_CPU=75
 WARNING_MEM=75
 WARNING_SWAP=65
