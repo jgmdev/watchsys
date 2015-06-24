@@ -64,11 +64,13 @@ cp src/watch_mem.sh "$DESTDIR/usr/lib/watchsys/" > /dev/null 2>&1
 cp src/watch_disk.sh "$DESTDIR/usr/lib/watchsys/" > /dev/null 2>&1
 cp src/watch_proc.sh "$DESTDIR/usr/lib/watchsys/" > /dev/null 2>&1
 cp src/watch_servers.sh "$DESTDIR/usr/lib/watchsys/" > /dev/null 2>&1
+cp src/watch_directories.sh "$DESTDIR/usr/lib/watchsys/" > /dev/null 2>&1
 chmod 0755 /usr/lib/watchsys/watch_cpu.sh > /dev/null 2>&1
 chmod 0755 /usr/lib/watchsys/watch_mem.sh > /dev/null 2>&1
 chmod 0755 /usr/lib/watchsys/watch_disk.sh > /dev/null 2>&1
 chmod 0755 /usr/lib/watchsys/watch_proc.sh > /dev/null 2>&1
 chmod 0755 /usr/lib/watchsys/watch_servers.sh > /dev/null 2>&1
+chmod 0755 /usr/lib/watchsys/watch_directories.sh > /dev/null 2>&1
 echo " (done)"
 
 echo -n 'Adding man page...'
