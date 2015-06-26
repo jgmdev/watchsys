@@ -1,4 +1,4 @@
-#!/bin/bash
+!/bin/bash
 ########################################################################
 # author: Jefferson González <jgmdev@gmail.com>                        #
 # copyright: 2015 Jefferson González                                   #
@@ -376,13 +376,13 @@ monitor_directories()
             return
         fi
 
-        echo "Below is a diff showing the file changes" >> \
+        echo "Below is a partial diff showing the file changes" >> \
             "$DIRECTORIES_STATUS_EMAIL"
 
-        echo "========================================" >> \
+        echo "=================================================" >> \
             "$DIRECTORIES_STATUS_EMAIL"
 
-        cat "$DIRECTORIES_STATUS_DIFF" >> "$DIRECTORIES_STATUS_EMAIL"
+        grep "^[-+]" "$DIRECTORIES_STATUS_DIFF" >> "$DIRECTORIES_STATUS_EMAIL"
 
         send_email "Warning: files have changed" \
             $DIRECTORIES_STATUS_EMAIL
