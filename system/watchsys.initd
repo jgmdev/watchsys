@@ -29,12 +29,12 @@ set -e
 case "$1" in
     start)
         log_daemon_msg "Starting $DESC " "$INAME"
-        /usr/bin/watchsys --start
+        /usr/bin/watchsys --start >> /dev/null 2>&1
         log_end_msg $?
         ;;
     stop)
         log_daemon_msg "Stopping $DESC " "$INAME"
-        /usr/bin/watchsys --stop
+        /usr/bin/watchsys --stop >> /dev/null 2>&1
         log_end_msg $?
         ;;
     status)
