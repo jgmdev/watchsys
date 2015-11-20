@@ -13,23 +13,43 @@
 #
 # Jefferson Gonzalez <jgmdev@gmail.com>
 
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+DAEMON=/usr/local/sbin/ddos
+INAME="watchsys"
+DESC="basic monitoring system"
+LOGDIR=/var/log  # Log directory to use
+
+test -x $DAEMON || exit 0
+
+. /lib/lsb/init-functions
+
+set -e
+
 case "$1" in
-        start)
-                watchsys --start
+    start)
+        log_daemon_msg "Starting $DESC " "$INAME"
+        /usr/bin/watchsys --start
+        log_end_msg $?
         ;;
-        stop)
-                watchsys --stop
-                ;;
-        status)
-                watchsys --status
-                ;;
-        restart)
-                watchsys --stop
-                watchsys --start
-                ;;
-        *)
+    stop)
+        log_daemon_msg "Stopping $DESC " "$INAME"
+        /usr/bin/watchsys --stop
+        log_end_msg $?
+        ;;
+    status)
+        /usr/bin/watchsys --status
+        ;;
+    restart)
+        log_daemon_msg "Restarting $DESC " "$INAME"
+        log_end_msg $?
+        $0 stop
+        $0 start
+        ;;
+    *)
         echo "Usage: /etc/init.d/watchsys {start|stop|restart|status}"
         exit 1
+        ;;
 esac
 
 exit 0
