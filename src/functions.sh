@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 ########################################################################
 # author: Jefferson González <jgmdev@gmail.com>                        #
 # copyright: 2015 Jefferson González                                   #
