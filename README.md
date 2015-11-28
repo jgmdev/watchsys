@@ -4,8 +4,8 @@ Bash shell script for basic system monitoring and prevention.
 
 ## About
 
-WatchSys is a set of bash shell scripts that run from a central daemon 
-for basic monitoring of a linux server processes, cpu usage, 
+WatchSys is a set of bash shell scripts that run from a central daemon
+for basic monitoring of a linux server processes, cpu usage,
 network connections, ram usage, disk usage, file changes, etc...
 
 This software is licensed under the GPLv3 http://www.gnu.org/licenses/
@@ -17,7 +17,7 @@ This software is licensed under the GPLv3 http://www.gnu.org/licenses/
 * Monitoring of cpu, memory and disk usage.
 * Monitoring of system processes/services status.
 * Automatic restart of system processes/services if they fail.
-* E-mailing of reports for system events like failed proccesses, 
+* E-mailing of reports for system events like failed proccesses,
   dead connections, file changes, critical cpu usage,
   critical memory usage, critical disk space usage, etc...
 
@@ -68,7 +68,7 @@ and a notification e-mail sent to you. Example:
 
 **/etc/watchsys/servers.list**
 
-On this file you can add a list of host names or ip addresses to 
+On this file you can add a list of host names or ip addresses to
 monitor its online status, for example:
 
 > \# server : port <br />
@@ -109,15 +109,15 @@ If running as classical init.d script:
 **-h | --help:**
 
    Show the help screen.
-    
+
 **-d | --start:**
 
-   Initialize a daemon to monitor connections.
-    
+   Initialize a daemon to monitor system.
+
 **-s | --stop:**
 
    Stop the daemon.
-    
+
 **-t | --status:**
 
    Show status of daemon and pid if currently running.
